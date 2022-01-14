@@ -1,2 +1,2 @@
 # AlertParser
- gather alerts for you area straight from the NWS API
+ gather alerts for your area straight from the NWS API
