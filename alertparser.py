@@ -23,6 +23,10 @@ if id_list == 0:
 id_list = int(id_list) - 1
 warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n>")
 
+if int(warning_id) > int(id_list):
+    print("That alert does not exist!")
+    quit()
+
 #parse info
 active_headline = parse_json['features'][int(warning_id)]['properties']['headline']
 active_location = parse_json['features'][int(warning_id)]['properties']['areaDesc']
