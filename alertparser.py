@@ -1,6 +1,16 @@
 #modules
 import requests
 import json
+import os
+
+#clear console
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):
+        command = 'cls'
+    os.system(command)
+
+clearConsole()
 
 #what area
 state = input("Please enter your two letter state/territory ID in ALL CAPITALS. \n>")
