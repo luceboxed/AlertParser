@@ -5,7 +5,7 @@ import os
 
 #clear console
 def clearConsole():
-    command = 'clear'
+
     if os.name in ('nt', 'dos'):
         command = 'cls'
     os.system(command)
@@ -54,5 +54,6 @@ print("COUNTIES AFFECTED: " + str(active_location))
 print("__DESCRIPTION__\n" + str(active_desc))
 print("SEVERITY: " + str(severity))
 print("URGENCY/TIMEFRAME: " + str(urgency))
-print("__INSTRUCTIONS__\n" + str(instructions))
+if str(instructions) != 'None':
+    print("__INSTRUCTIONS__\n" + str(instructions))
 print('\n')
