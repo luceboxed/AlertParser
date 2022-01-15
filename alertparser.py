@@ -7,8 +7,10 @@ import os
 def clearConsole():
 
     if os.name in ('nt', 'dos'):
-        command = 'cls'
-    os.system(command)
+        clearcommand = 'cls'
+    else:
+        clearcommand = 'clear'
+    os.system(clearcommand)
 
 clearConsole()
 
