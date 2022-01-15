@@ -52,7 +52,7 @@ instructions = parse_json['features'][int(warning_id)]['properties']['instructio
 
 #PRINT DETAILS
 print(str(active_headline))
-print("COUNTIES AFFECTED: " + str(active_location))
+print("AREAS/COUNTIES AFFECTED: " + str(active_location))
 print("__DESCRIPTION__\n" + str(active_desc))
 print("SEVERITY: " + str(severity))
 print("URGENCY/TIMEFRAME: " + str(urgency))
