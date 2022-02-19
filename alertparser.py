@@ -15,12 +15,45 @@ def clearConsole():
 
 clearConsole()
 
+#PRINT DETAILS
+def parse_info(warning_id):
+    #print info
+    details = {}
+    details["headline"] = parse_json['features'][int(warning_id)]['properties']['headline']
+    details["location"] = parse_json['features'][int(warning_id)]['properties']['areaDesc']
+    details["description"] = parse_json['features'][int(warning_id)]['properties']['description']
+    details["severity"] = parse_json['features'][int(warning_id)]['properties']['severity']
+    details["urgency"] = parse_json['features'][int(warning_id)]['properties']['urgency']
+    details["instruction"] = parse_json['features'][int(warning_id)]['properties']['instruction']
+    print(str(details["headline"]))
+    print("AREAS/COUNTIES AFFECTED: " + str(details["location"]))
+    print("__DESCRIPTION__\n" + str(details["description"]))
+    print("SEVERITY: " + str(details["severity"]))
+    print("URGENCY/TIMEFRAME: " + str(details["urgency"]))
+    if str(details["instruction"]) != 'None':
+        print("__INSTRUCTIONS__\n" + str(details["instruction"]))
+    
+
+
 #what area
-state = input("Please enter your two letter state/territory ID in ALL CAPITALS. \n>")
-response_API = requests.get('https://api.weather.gov/alerts/active?area=' + state)
+id_data = open("state_id.json")
+id_dict = json.load(id_data)
+while True:
+    state = input("Please enter the name/ID of your state. \nFor a list of IDs, please type \"list.\"\n>")
+    if state.lower() == "list":
+        for key in id_dict:
+            print(key + " - " + id_dict[key])
+        continue
+    if state.lower() != "list":
+        break
+for key in id_dict:
+        if id_dict[key] == state.capitalize():
+            state = key
+            break
+response_API = requests.get('https://api.weather.gov/alerts/active?area=' + state.upper())
 print("Reponse Code: " + str(response_API.status_code))
 if response_API.status_code != 200:
-    print("You got a reponse code other than 200. You either typed in your code wrong/in lowercase, or the NWS API is down.")
+    print("You got a reponse code other than 200. You either typed in your state wrong, or the NWS API is down.")
     quit()
 data = response_API.text
 parse_json = json.loads(data)
@@ -45,29 +78,5 @@ warning_id = input("What ID alert would you like to see?" + " (Please enter an I
 if int(warning_id) > int(id_list):
     print("That alert does not exist!")
     quit()
-
-
-#PRINT DETAILS
-def parse_info():
-    #print info
-    details = {}
-    details["headline"] = parse_json['features'][int(warning_id)]['properties']['headline']
-    details["location"] = parse_json['features'][int(warning_id)]['properties']['areaDesc']
-    details["description"] = parse_json['features'][int(warning_id)]['properties']['description']
-    details["severity"] = parse_json['features'][int(warning_id)]['properties']['severity']
-    details["urgency"] = parse_json['features'][int(warning_id)]['properties']['urgency']
-    details["instruction"] = parse_json['features'][int(warning_id)]['properties']['instruction']
-    print(str(details["headline"]))
-    print("AREAS/COUNTIES AFFECTED: " + str(details["location"]))
-    print("__DESCRIPTION__\n" + str(details["description"]))
-    print("SEVERITY: " + str(details["severity"]))
-    print("URGENCY/TIMEFRAME: " + str(details["urgency"]))
-    if str(details["instruction"]) != 'None':
-        print("__INSTRUCTIONS__\n" + str(details["instruction"]))
-
-
-
-
-clearConsole()
-parse_info()
+parse_info(warning_id)
 print('\n')
