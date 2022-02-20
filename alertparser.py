@@ -13,7 +13,6 @@ def clearConsole():
         clearcommand = 'clear'
     os.system(clearcommand)
 
-clearConsole()
 
 #PRINT DETAILS
 def parse_info(warning_id):
@@ -39,7 +38,7 @@ def parse_info(warning_id):
 id_data = open("state_id.json")
 id_dict = json.load(id_data)
 while True:
-    state = input("Please enter the name/ID of your state. \nFor a list of IDs, please type \"list.\"\n>")
+    state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n>")
     if state.lower() == "list":
         for key in id_dict:
             print(key + " - " + id_dict[key])
