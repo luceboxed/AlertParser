@@ -72,8 +72,12 @@ for i in range(id_list):
     for item in headline_list:
         print(str(i) + " - " + str(item))
 id_list = int(id_list) - 1
-warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n>")
-
+while True:
+    warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n>")
+    if warning_id.isnumeric() == False:
+        print("That's not a number!")
+    else:
+        break
 if int(warning_id) > int(id_list):
     print("That alert does not exist!")
     quit()
