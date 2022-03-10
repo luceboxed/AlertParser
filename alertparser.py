@@ -13,6 +13,13 @@ def clearConsole():
         clearcommand = 'clear'
     os.system(clearcommand)
 
+#check if float
+def isfloat(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    return False
 
 #PRINT DETAILS
 def parse_info(warning_id):
@@ -38,21 +45,38 @@ def parse_info(warning_id):
 id_data = open("state_id.json")
 id_dict = json.load(id_data)
 while True:
-    state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n>")
-    if state.lower() == "list":
-        for key in id_dict:
-            print(key + " - " + id_dict[key])
+    location_option = input("Would you like to search by coordinate or by state? (c/s)\n> ")
+    if location_option != "c" and location_option != "s":
+        print("Invalid input. Please try again.")
         continue
-    if state.lower() != "list":
+    else:
         break
-for key in id_dict:
-        if id_dict[key] == state.capitalize():
-            state = key
+if location_option == "s":
+    while True:
+        state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n>")
+        if state.lower() == "list":
+            for key in id_dict:
+                print(key + " - " + id_dict[key])
+            continue
+        if state.lower() != "list":
             break
-response_API = requests.get('https://api.weather.gov/alerts/active?area=' + state.upper())
+        for key in id_dict:
+                if id_dict[key] == state.capitalize():
+                    state = key
+                    break
+    response_API = requests.get("https://api.weather.gov/alerts/active?area=" + state.upper())
+if location_option == "c":
+    while True:
+        lat = input("Please enter the latitude of your location.\n>")
+        lon = input("Please enter the longitude of your location.\n>")
+        response_API = requests.get('https://api.weather.gov/alerts/active?point=' + lat + ',' + lon)
+        if isfloat(lat) == False or isfloat(lon) == False:
+            print("One of your coordinates isn't a number. Please try again.")
+        else:
+            break
 print("Reponse Code: " + str(response_API.status_code))
 if response_API.status_code != 200:
-    print("You got a reponse code other than 200. You either typed in your state wrong, or the NWS API is down.")
+    print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
     quit()
 data = response_API.text
 parse_json = json.loads(data)
