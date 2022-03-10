@@ -46,12 +46,12 @@ id_data = open("state_id.json")
 id_dict = json.load(id_data)
 while True:
     location_option = input("Would you like to search by coordinate or by state? (c/s)\n> ")
-    if location_option != "c" and location_option != "s":
+    if location_option.lower() != "c" and location_option.lower() != "s":
         print("Invalid input. Please try again.")
         continue
     else:
         break
-if location_option == "s":
+if location_option.lower() == "s":
     while True:
         state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n>")
         if state.lower() == "list":
@@ -65,7 +65,7 @@ if location_option == "s":
                     state = key
                     break
     response_API = requests.get("https://api.weather.gov/alerts/active?area=" + state.upper())
-if location_option == "c":
+if location_option.lower() == "c":
     while True:
         lat = input("Please enter the latitude of your location.\n>")
         lon = input("Please enter the longitude of your location.\n>")
@@ -74,6 +74,9 @@ if location_option == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
+else:
+    print("An error occured. Please try again.")
+    quit()
 print("Reponse Code: " + str(response_API.status_code))
 if response_API.status_code != 200:
     print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
