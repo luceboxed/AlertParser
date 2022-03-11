@@ -59,12 +59,12 @@ if location_option.lower() == "s":
                 print(key + " - " + id_dict[key])
             continue
         if state.lower() != "list":
-            break
-        for key in id_dict:
-                if id_dict[key] == state.capitalize():
-                    state = key
-                    break
-    response_API = requests.get("https://api.weather.gov/alerts/active?area=" + state.upper())
+            for key in id_dict:
+                    if id_dict[key] == state.capitalize():
+                        state = key
+                        break
+        response_API = requests.get("https://api.weather.gov/alerts/active?area=" + state.upper())
+        break
 if location_option.lower() == "c":
     while True:
         lat = input("Please enter the latitude of your location.\n>")
