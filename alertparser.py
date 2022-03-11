@@ -53,7 +53,7 @@ while True:
         break
 if location_option.lower() == "s":
     while True:
-        state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n>")
+        state = input("Please enter the name/ID of your state. \nFor a list of IDs and names, please type \"list\".\n> ")
         if state.lower() == "list":
             for key in id_dict:
                 print(key + " - " + id_dict[key])
@@ -67,8 +67,8 @@ if location_option.lower() == "s":
         break
 if location_option.lower() == "c":
     while True:
-        lat = input("Please enter the latitude of your location.\n>")
-        lon = input("Please enter the longitude of your location.\n>")
+        lat = input("Please enter the latitude of your location.\n> ")
+        lon = input("Please enter the longitude of your location.\n> ")
         response_API = requests.get('https://api.weather.gov/alerts/active?point=' + lat + ',' + lon)
         if isfloat(lat) == False or isfloat(lon) == False:
             print("One of your coordinates isn't a number. Please try again.")
@@ -97,13 +97,12 @@ for i in range(id_list):
         print(str(i) + " - " + str(item))
 id_list = int(id_list) - 1
 while True:
-    warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n>")
+    warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n> ")
     if warning_id.isnumeric() == False:
         print("That's not a number!")
+    if int(warning_id) > int(id_list):
+        print("That alert does not exist!")
     else:
         break
-if int(warning_id) > int(id_list):
-    print("That alert does not exist!")
-    quit()
 parse_info(warning_id)
 print('\n')
