@@ -3,6 +3,7 @@ import requests
 import json
 import os
 
+#stuff
 headers = {
     'User-Agent': 'https://github.com/spikeyscout/AlertParser, scout@spikeyscout.xyz',
 }
