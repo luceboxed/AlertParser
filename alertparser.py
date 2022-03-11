@@ -3,6 +3,10 @@ import requests
 import json
 import os
 
+headers = {
+    'User-Agent': 'https://github.com/spikeyscout/AlertParser, scout@spikeyscout.xyz',
+}
+url = "https://api.weather.gov/alerts/active?"
 
 #clear console
 def clearConsole():
@@ -63,13 +67,13 @@ if location_option.lower() == "s":
                     if id_dict[key] == state.capitalize():
                         state = key
                         break
-        response_API = requests.get("https://api.weather.gov/alerts/active?area=" + state.upper())
+        response_API = requests.get(url + "area=" + state.upper(), headers=headers)
         break
 if location_option.lower() == "c":
     while True:
         lat = input("Please enter the latitude of your location.\n> ")
         lon = input("Please enter the longitude of your location.\n> ")
-        response_API = requests.get('https://api.weather.gov/alerts/active?point=' + lat + ',' + lon)
+        response_API = requests.get(url + 'point=' + lat + ',' + lon, headers=headers)
         if isfloat(lat) == False or isfloat(lon) == False:
             print("One of your coordinates isn't a number. Please try again.")
         else:
