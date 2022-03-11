@@ -74,9 +74,6 @@ if location_option.lower() == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
-else:
-    print("An error occured. Please try again.")
-    quit()
 print("Reponse Code: " + str(response_API.status_code))
 if response_API.status_code != 200:
     print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
