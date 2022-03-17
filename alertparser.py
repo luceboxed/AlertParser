@@ -11,12 +11,7 @@ url = "https://api.weather.gov/alerts/active?"
 
 #clear console
 def clearConsole():
-
-    if os.name in ('nt', 'dos'):
-        clearcommand = 'cls'
-    else:
-        clearcommand = 'clear'
-    os.system(clearcommand)
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #check if float
 def isfloat(value):
