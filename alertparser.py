@@ -2,11 +2,16 @@
 import requests
 import json
 import os
+from os.path import exists
 
 #stuff
-headers = {
-    'User-Agent': 'https://github.com/spikeyscout/AlertParser, scout@spikeyscout.xyz',
-}
+config_exists = exists("config.json")
+if config_exists == False:
+  print("Please rename config_example to config and fill out the URL and email before proceeding.")
+  quit()
+headers_data = open("config.json")
+headers = json.load(headers_data)
+print(headers)
 url = "https://api.weather.gov/alerts/active?"
 
 #clear console
