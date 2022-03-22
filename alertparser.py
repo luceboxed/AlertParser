@@ -7,7 +7,7 @@ from os.path import exists
 #stuff
 config_exists = exists("config.json")
 if config_exists == False:
-  print("Please rename config_example to config and fill out the URL and email before proceeding.")
+  print("Please rename config_example.json to config.json and fill out the URL and email before proceeding.")
   quit()
 headers_data = open("config.json")
 headers = json.load(headers_data)
@@ -50,7 +50,7 @@ debug_mode = False
 id_data = open("state_id.json")
 id_dict = json.load(id_data)
 while True:
-    #debug mode in case something goes wrong
+    #debug/verbose mode in case something goes wrong - type "d" to enter debug mode
     if debug_mode == True:
         print("DEBUG MODE")
         print(headers)
@@ -90,6 +90,7 @@ if location_option.lower() == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
+#if debug mode is on, print the debug response
 if debug_mode == True:
     print("DEBUG MODE")
     print("Reponse Code: " + str(response_API.status_code))
@@ -101,6 +102,7 @@ if debug_mode == True:
 if response_API.status_code != 200:
     print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
     quit()
+#parse json
 data = response_API.text
 parse_json = json.loads(data)
 parse_id = parse_json['features']
@@ -112,6 +114,7 @@ id_list = len(parse_id)
 if id_list == 0:
     print("There are no active alerts in this area.")
     quit()
+#print id list
 for i in range(id_list):
     choose_headline = parse_json['features'][int(i)]['properties']['headline']
     headline_list = [ ]
@@ -119,6 +122,7 @@ for i in range(id_list):
     for item in headline_list:
         print(str(i) + " - " + str(item))
 id_list = int(id_list) - 1
+#ask for id
 while True:
     warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n> ")
     if warning_id.isnumeric() == False:
