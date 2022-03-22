@@ -11,7 +11,6 @@ if config_exists == False:
   quit()
 headers_data = open("config.json")
 headers = json.load(headers_data)
-print(headers)
 url = "https://api.weather.gov/alerts/active?"
 
 #clear console
@@ -47,11 +46,23 @@ def parse_info(warning_id):
 
 
 #what area
+debug_mode = False
 id_data = open("state_id.json")
 id_dict = json.load(id_data)
 while True:
+    #debug mode in case something goes wrong
+    if debug_mode == True:
+        print("DEBUG MODE")
+        print(headers)
     location_option = input("Would you like to search by coordinate or by state? (c/s)\n> ")
-    if location_option.lower() != "c" and location_option.lower() != "s":
+    if location_option.lower() == "d":
+        if debug_mode == True:
+            print("Debug mode is already enabled.")
+        if debug_mode == False:
+            print("Debug mode is now enabled.")
+        debug_mode = True
+        continue
+    if location_option.lower() != "c" and location_option.lower() != "s" and location_option.lower() != "d":
         print("Invalid input. Please try again.")
         continue
     else:
@@ -79,7 +90,14 @@ if location_option.lower() == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
-print("Reponse Code: " + str(response_API.status_code))
+if debug_mode == True:
+    print("DEBUG MODE")
+    print("Reponse Code: " + str(response_API.status_code))
+    #print url
+    if location_option.lower() == "c":
+        print(url + 'point=' + lat + ',' + lon)
+    if location_option.lower() == "s":
+        print("URL: " + url + 'area=' + state.upper())
 if response_API.status_code != 200:
     print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
     quit()
