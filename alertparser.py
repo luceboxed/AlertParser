@@ -107,12 +107,16 @@ while True:
             response_API = requests.get(url + '?point=' + lat + ',' + lon, headers=headers)
         if location_option.lower() == "s":
             response_API = requests.get(url + '?area=' + state.upper(), headers=headers)
+        break
     if active_or_historical.lower() == "a":
         if location_option.lower() == "c":
             response_API = requests.get(url + "/active" + '?point=' + lat + ',' + lon , headers=headers)
         if location_option.lower() == "s":
             response_API = requests.get(url + "/active" + '?area=' + state.upper(), headers=headers)
-    break
+        break
+    if active_or_historical.lower() != "a" and active_or_historical.lower() != "h":
+        print("Invalid input. Please try again.")
+        continue
 #if debug mode is on, print the debug response
 if debug_mode == True:
     print("----------------")
