@@ -91,6 +91,7 @@ if location_option.lower() == "s":
         break
 if location_option.lower() == "c":
     while True:
+        print("Please enter a latitude and longitude in the US.\nFor example, \"35.1561, -90.0514\"")
         lat = input("Please enter the latitude of your location.\n> ")
         lon = input("Please enter the longitude of your location.\n> ")
         response_API = requests.get(url + 'point=' + lat + ',' + lon, headers=headers)
