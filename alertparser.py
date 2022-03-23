@@ -102,7 +102,7 @@ if location_option.lower() == "c":
             break
 #historical or active
 while True:
-    print("Do you wish to see only active warnings or historical warnings?\nHistoircal warnings contain all alerts from the past 7 days. This list could get very long!\nActive warnings contain only alerts that are currently in effect or are going to go into effect.\n(a/h)")
+    print("Active warnings contain only alerts that are currently in effect or are going to go into effect.\nHistoircal warnings contain all alerts from the past 7 days. This list could get very long!\nDo you wish to see only active warnings or historical warnings? (a/h)")
     active_or_historical = input("> ")
     if active_or_historical.lower() == "h":
         if location_option.lower() == "c":
