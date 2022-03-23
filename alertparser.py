@@ -49,6 +49,7 @@ def parse_info(warning_id):
 debug_mode = False
 id_data = open("state_id.json")
 id_dict = json.load(id_data)
+#state or coords
 while True:
     #debug/verbose mode in case something goes wrong - type "d" to enter debug mode
     if debug_mode == True:
@@ -99,6 +100,7 @@ if location_option.lower() == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
+#historical or active
 while True:
     print("Do you wish to see only active warnings or historical warnings?\nHistoircal warnings contain all alerts from the past 7 days. This list could get very long!\nActive warnings contain only alerts that are currently in effect or are going to go into effect.\n(a/h)")
     active_or_historical = input("> ")
@@ -150,6 +152,7 @@ for i in range(id_list):
     headline_list.append(choose_headline)
     for item in headline_list:
         print(str(i) + " - " + str(item))
+        print("Location(s): " + parse_json['features'][int(i)]['properties']['areaDesc'][0:60]  +"...")
 id_list = int(id_list) - 1
 #ask for id
 while True:
