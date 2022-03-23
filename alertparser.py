@@ -11,7 +11,7 @@ if config_exists == False:
   quit()
 headers_data = open("config.json")
 headers = json.load(headers_data)
-url = "https://api.weather.gov/alerts/active?"
+url = "https://api.weather.gov/alerts"
 
 #clear console
 def clearConsole():
@@ -99,6 +99,20 @@ if location_option.lower() == "c":
             print("One of your coordinates isn't a number. Please try again.")
         else:
             break
+while True:
+    print("Do you wish to see only active warnings or historical warnings?\nHistoircal warnings contain all alerts from the past 7 days. This list could get very long!\nActive warnings contain only alerts that are currently in effect or are going to go into effect.\n(a/h)")
+    active_or_historical = input("> ")
+    if active_or_historical.lower() == "h":
+        if location_option.lower() == "c":
+            response_API = requests.get(url + '?point=' + lat + ',' + lon, headers=headers)
+        if location_option.lower() == "s":
+            response_API = requests.get(url + '?area=' + state.upper(), headers=headers)
+    if active_or_historical.lower() == "a":
+        if location_option.lower() == "c":
+            response_API = requests.get(url + "/active" + '?point=' + lat + ',' + lon , headers=headers)
+        if location_option.lower() == "s":
+            response_API = requests.get(url + "/active" + '?area=' + state.upper(), headers=headers)
+    break
 #if debug mode is on, print the debug response
 if debug_mode == True:
     print("----------------")
@@ -106,12 +120,12 @@ if debug_mode == True:
     print("Reponse Code: " + str(response_API.status_code))
     #print url
     if location_option.lower() == "c":
-        print(url + 'point=' + lat + ',' + lon)
+        print(response_API.url)
     if location_option.lower() == "s":
-        print("URL: " + url + 'area=' + state.upper())
+        print(response_API.url)
     print("----------------")
 if response_API.status_code != 200:
-    print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
+    print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down. If the problem persists, please try again later.")
     quit()
 #parse json
 data = response_API.text
