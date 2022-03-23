@@ -52,8 +52,10 @@ id_dict = json.load(id_data)
 while True:
     #debug/verbose mode in case something goes wrong - type "d" to enter debug mode
     if debug_mode == True:
+        print("----------------")
         print("DEBUG MODE")
         print(headers)
+        print("----------------")
     location_option = input("Would you like to search by coordinate or by state? (c/s)\n> ")
     if location_option.lower() == "d":
         if debug_mode == True:
@@ -77,6 +79,12 @@ if location_option.lower() == "s":
         if state.lower() != "list":
             for key in id_dict:
                     if id_dict[key] == state.capitalize():
+                        #verbose mode
+                        if debug_mode == True:
+                            print("----------------")
+                            print("DEBUG MODE")
+                            print("Changed " + state + " to " + key)
+                            print("----------------")
                         state = key
                         break
         response_API = requests.get(url + "area=" + state.upper(), headers=headers)
@@ -92,6 +100,7 @@ if location_option.lower() == "c":
             break
 #if debug mode is on, print the debug response
 if debug_mode == True:
+    print("----------------")
     print("DEBUG MODE")
     print("Reponse Code: " + str(response_API.status_code))
     #print url
@@ -99,6 +108,7 @@ if debug_mode == True:
         print(url + 'point=' + lat + ',' + lon)
     if location_option.lower() == "s":
         print("URL: " + url + 'area=' + state.upper())
+    print("----------------")
 if response_API.status_code != 200:
     print("You got a reponse code other than 200. You either typed something in wrong, or the NWS API is down.")
     quit()
