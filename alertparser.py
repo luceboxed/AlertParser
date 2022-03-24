@@ -9,7 +9,7 @@ from os.path import exists
 #stuff
 config_exists = exists("config.json")
 if config_exists == False:
-  print("config.json not found. We recommend you use the example in the repo to create one and rename it to config.json. The program will work without it, but the NWS does ask you add it so they can identify you.")
+  print("config.json not found. We recommend you use the example in the repo to create one and rename it to config.json. The program may work without it, but the NWS does ask you add it so they can identify you.")
   sleep(5)
   headers = ""
 if config_exists == True:
