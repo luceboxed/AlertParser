@@ -2,15 +2,19 @@
 import requests
 import json
 import os
+import sys
+from time import sleep
 from os.path import exists
 
 #stuff
 config_exists = exists("config.json")
 if config_exists == False:
-  print("Please rename config_example.json to config.json and fill out the URL and email before proceeding.")
-  quit()
-headers_data = open("config.json")
-headers = json.load(headers_data)
+  print("config.json not found. We recommend you use the example in the repo to create one and rename it to config.json. The program will work without it, but the NWS does ask you add it so they can identify you.")
+  sleep(5)
+  headers = ""
+if config_exists == True:
+    headers_data = open("config.json")
+    headers = json.load(headers_data)
 url = "https://api.weather.gov/alerts"
 
 #clear console
@@ -159,9 +163,19 @@ while True:
     warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n> ")
     if warning_id.isnumeric() == False:
         print("That's not a number!")
-    if int(warning_id) > int(id_list):
-        print("That alert does not exist!")
-    else:
-        break
+    if warning_id.isnumeric() == True:
+        if int(warning_id) > int(id_list):
+            print("That alert does not exist!")
+        else:
+            break
 parse_info(warning_id)
 print('\n')
+#restart
+restart_option = input("Would you like to see another alert? (y/n) \n> ")
+if restart_option == "y":
+    print("\n")
+    os.execv(sys.executable, ['python'] + sys.argv)
+if restart_option == "n":
+    print("\n")
+    print("Thank you for using AlertParser. Goodbye.")
+    quit()
