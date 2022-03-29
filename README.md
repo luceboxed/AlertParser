@@ -1,4 +1,4 @@
-# HI AP GUYS THIS IS MY AP PROJECT I DIDNT STEAL IT THANK YOU
+# HI AP GUYS THIS IS MY AP COMPSCI PROJECT I DIDNT STEAL IT THANK YOU
 
 # AlertParser
 ## gather alerts for your area straight from the NWS API
