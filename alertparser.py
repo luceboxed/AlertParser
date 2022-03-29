@@ -149,7 +149,14 @@ print(parse_area)
 id_list = len(parse_id)
 if id_list == 0:
     print("There are no active alerts in this area.")
-    quit()
+    restart_option = input("Would you like to see another alert? (y/n) \n> ")
+    if restart_option == "y":
+        print("\n")
+        os.execv(sys.executable, ['python'] + sys.argv)
+    if restart_option == "n":
+        print("\n")
+        print("Thank you for using AlertParser. Goodbye.")
+        quit()
 #print id list
 for i in range(id_list):
     choose_headline = parse_json['features'][int(i)]['properties']['headline']
