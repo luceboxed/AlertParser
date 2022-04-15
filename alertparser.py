@@ -18,6 +18,17 @@ if config_exists == True:
     headers = json.load(headers_data)
 url = "https://api.weather.gov/alerts"
 
+#check if valid
+def validate_id(alertid):
+    while True:
+        if alertid.isnumeric() == False:
+            return False
+        if alertid.isnumeric() == True:
+            if int(alertid) > int(id_list):
+                return False
+            else:
+                return True
+
 #clear console
 def clearConsole():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -169,13 +180,11 @@ id_list = int(id_list) - 1
 #ask for id
 while True:
     warning_id = input("What ID alert would you like to see?" + " (Please enter an ID from 0-" + str(id_list) + ") \n> ")
-    if warning_id.isnumeric() == False:
-        print("That's not a number!")
-    if warning_id.isnumeric() == True:
-        if int(warning_id) > int(id_list):
-            print("That alert does not exist!")
-        else:
-            break
+    if validate_id(warning_id) == True:
+        break
+    if validate_id(warning_id) == False:
+        print("Invalid input. Please try again.")
+        continue
 parse_info(warning_id)
 print('\n')
 #restart
