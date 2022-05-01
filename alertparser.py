@@ -51,11 +51,27 @@ def parse_info(warning_id):
     details["severity"] = parse_json['features'][int(warning_id)]['properties']['severity']
     details["urgency"] = parse_json['features'][int(warning_id)]['properties']['urgency']
     details["instruction"] = parse_json['features'][int(warning_id)]['properties']['instruction']
+    details["response"] = parse_json['features'][int(warning_id)]['properties']['response']
+    print("\n")
     print(str(details["headline"]))
     print("AREAS/COUNTIES AFFECTED: " + str(details["location"]))
     print("__DESCRIPTION__\n" + str(details["description"]))
     print("SEVERITY: " + str(details["severity"]))
     print("URGENCY/TIMEFRAME: " + str(details["urgency"]))
+    print("\n")
+    if str(details["response"]) != 'None':
+        if str(details["response"]) == 'Monitor':
+            print("You should monitor the situation, and be prepared to take action if neccesary.")
+        elif str(details["response"]) == 'Avoid':
+            print("You should avoid the affected area(s).")
+        elif str(details["response"]) == 'Shelter':
+            print("You should take shelter NOW! Follow the instructions below, if any.")
+        elif str(details["response"]) == 'Execute':
+            print("You should take action NOW. If instructions are listed follow them.")
+        elif str(details["response"]) != 'None':
+            print("The response you should take is " + str(details["response"]) + ". Follow the instructions below, if any.")
+        else:
+            print("No response listed.")
     if str(details["instruction"]) != 'None':
         print("__INSTRUCTIONS__\n" + str(details["instruction"]))
     
